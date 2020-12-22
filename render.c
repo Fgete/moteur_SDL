@@ -1,7 +1,22 @@
 // PROTOTYPES
 void Render_Background(struct renderer);
 void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
+void Render_Window(struct renderer*);
 
+
+// Render window
+void Render_Window(struct renderer* sRenderer){
+    if (sRenderer->pWindow)
+        SDL_DestroyWindow(sRenderer->pWindow);
+    sRenderer->pWindow = SDL_CreateWindow(
+        GAME_TITLE,
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO,
+        GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO,
+        SDL_WINDOW_SHOWN);
+    sRenderer->pRenderer = SDL_CreateRenderer(sRenderer->pWindow, -1, SDL_RENDERER_PRESENTVSYNC);
+}
 
 // Render menu title
 void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color){

@@ -2,7 +2,9 @@
 // Title
 #define GAME_TITLE "GAME NAME"
 // Credits
-#define DEV_NAME0 "Francois GETE"
+#define DEV_NAME0 "François GETE"
 #define DEV_NAME1 "LAG Studio"
 // Options
-float WINDOW_RATIO = .5;
+#define FS_OFF .5
+#define FS_ON 1
+float WINDOW_RATIO = FS_OFF;

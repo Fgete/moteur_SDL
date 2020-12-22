@@ -29,14 +29,7 @@ int main(int argc, char *argv[])
     }else{
         SDL_Log("SDL2 -> OK");
         // Draw screen
-        int windowScaleX = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO;
-        int windowScaleY = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO;
-        sRenderer.pWindow = SDL_CreateWindow("Moteur SDL", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, windowScaleX, windowScaleY, SDL_WINDOW_SHOWN);
-
-        // Renderer init
-        if (sRenderer.pWindow){
-            sRenderer.pRenderer = SDL_CreateRenderer(sRenderer.pWindow, -1, SDL_RENDERER_PRESENTVSYNC);
-        }
+        Render_Window(&sRenderer);
 
         // Image init
         int flags = IMG_INIT_JPG|IMG_INIT_PNG;
@@ -66,7 +59,8 @@ int main(int argc, char *argv[])
                 case 1: /* INIT */ break;
                 case 2: /* GAME */ break;
                 case 3: /* CONTINUE */ break;
-                case 4: /* OPTIONS */ break;
+                case 4: /* OPTIONS */
+                    Menu_Options(&sRenderer, &gameState); break;
                 case 5: /* CREDITS */
                     Menu_Credits(sRenderer, &gameState); break;
                 case 6: /* QUIT */
