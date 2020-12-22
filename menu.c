@@ -18,7 +18,8 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
     SDL_Color blackOff = {0, 0, 0, 100};
     int titleIndex = 0;
     int titleState = 0;
-    int titleGameState[5] = {1, 3, 4, 5, 6};
+    // int titleGameState[5] = {1, 3, 4, 5, 6}; // Final states
+    int titleGameState[5] = {0, 0, 0, 5, 6}; // Temporary states
     char titles[5][TITLE_LENGTH];
     strcpy(titles[0], "Start");
     strcpy(titles[1], "Continue");
@@ -62,12 +63,12 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
         Render_Background(sRenderer);
-        Render_Title(sRenderer, GAME_TITLE, 0, -50, 1, black);
+        Render_Title(sRenderer, GAME_TITLE, 0, -250, 1, black);
         for (int i = 0; i < strlen(titles); i++){
             if (i == titleIndex)
-                Render_Title(sRenderer, titles[i], 0, 100 * (i+1), .5, black);
+                Render_Title(sRenderer, titles[i], 0, 100 * i - 50, .5, black);
             else
-                Render_Title(sRenderer, titles[i], 0, 100 * (i+1), .5, blackOff);
+                Render_Title(sRenderer, titles[i], 0, 100 * i - 50, .5, blackOff);
         }
         SDL_RenderPresent(sRenderer.pRenderer);
     }
@@ -105,11 +106,11 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
         Render_Background(sRenderer);
-        Render_Title(sRenderer, "Credits", 0, -50, 1, black);
-        Render_Title(sRenderer, "Developer", 0, 100, .5, black);
-        Render_Title(sRenderer, DEV_NAME0, 0, 200, .4, black);
-        Render_Title(sRenderer, DEV_NAME1, 0, 250, .4, black);
-        Render_Title(sRenderer, "Back", 0, 400, .5, black);
+        Render_Title(sRenderer, "Credits", 0, -250, 1, black);
+        Render_Title(sRenderer, "Developer", 0, -50, .5, black);
+        Render_Title(sRenderer, DEV_NAME0, 0, 50, .4, black);
+        Render_Title(sRenderer, DEV_NAME1, 0, 150, .4, black);
+        Render_Title(sRenderer, "Back", 0, 350, .5, black);
         SDL_RenderPresent(sRenderer.pRenderer);
     }
 }

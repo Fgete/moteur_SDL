@@ -5,3 +5,4 @@
 #define DEV_NAME0 "Francois GETE"
 #define DEV_NAME1 "LAG Studio"
 // Options
+float WINDOW_RATIO = .5;

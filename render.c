@@ -14,7 +14,7 @@ void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOf
     titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * size * strlen(title) * .1;
     titleRect.h = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .1 * size;
     titleRect.x = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 - titleRect.w * .5 + WINDOW_RATIO * xOffset;
-    titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .25 - titleRect.h * .5 + WINDOW_RATIO * yOffset;
+    titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .5 - titleRect.h * .5 + WINDOW_RATIO * yOffset;
     // Render
     rendererObject renderTitle;
     renderTitle.pSurface = TTF_RenderText_Solid(textFont, title, color);
