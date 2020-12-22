@@ -8,5 +8,3 @@ typedef struct rendererObject{
     SDL_Surface *pSurface;
     SDL_Texture *pTexture;
 }rendererObject;
-
-typedef char string[TITLE_LENGTH];

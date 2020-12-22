@@ -6,12 +6,12 @@ void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, floa
 // Render menu title
 void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color){
     // Font load
-    TTF_Font* textFont = TTF_OpenFont("./assets/font/textFont.ttf", 24);
+    TTF_Font* textFont = TTF_OpenFont("./assets/font/default.ttf", 64);
     if (!textFont)
-        printf("textFont.ttf --- LOAD ERROR !\n");
+        printf("default.ttf --- LOAD ERROR !\n");
     // Sprite
     SDL_Rect titleRect;
-    titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * size * strlen(title) * .15;
+    titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * size * strlen(title) * .1;
     titleRect.h = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .1 * size;
     titleRect.x = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 - titleRect.w * .5 + WINDOW_RATIO * xOffset;
     titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .25 - titleRect.h * .5 + WINDOW_RATIO * yOffset;

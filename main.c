@@ -8,9 +8,9 @@
 #include <SDL2/SDL_ttf.h>
 // CONST
 #define WINDOW_RATIO .5
-#define TITLE_LENGTH 10
-#define GAME_TITLE "GAME NAME"
+#define TITLE_LENGTH 16
 // SOURCES
+#include "info.c"
 #include "structure.c"
 #include "render.c"
 #include "menu.c"
@@ -67,8 +67,10 @@ int main(int argc, char *argv[])
                 case 2: /* GAME */ break;
                 case 3: /* CONTINUE */ break;
                 case 4: /* OPTIONS */ break;
-                case 5: /* CREDITS */ break;
-                case 6: /* QUIT */ break;
+                case 5: /* CREDITS */
+                    Menu_Credits(sRenderer, &gameState); break;
+                case 6: /* QUIT */
+                    Menu_Quit(sRenderer, &gameState); break;
                 default : gameState = -1; break;
             }
         }
