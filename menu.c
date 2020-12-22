@@ -4,6 +4,21 @@ void Menu_Options(struct renderer*, int*);
 void Menu_Credits(struct renderer, int*);
 void Menu_Quit(struct renderer, int*);
 void Menu_Navigation(int* gameState, int* menuState, int menuGameState);
+void Toggle_Fullscreen(struct renderer*, char[TITLE_LENGTH]);
+
+
+// Toggle fullscreen
+void Toggle_Fullscreen(struct renderer* sRenderer, char option[TITLE_LENGTH]){
+    if (WINDOW_RATIO == FS_OFF){
+        WINDOW_RATIO = FS_ON;
+        strcpy(option, "Fullscreen ON");
+    }else{
+        WINDOW_RATIO = FS_OFF;
+        strcpy(option, "Fullscreen OFF");
+    }
+    // Redraw screen
+    Render_Window(sRenderer);
+}
 
 // Menu navigation (it turns the "while"'s state into chosen menu state)
 void Menu_Navigation(int* gameState, int* menuState, int menuGameState){
@@ -172,18 +187,6 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
     }
 }
 
-void Toggle_Fullscreen(struct renderer* sRenderer, char option[TITLE_LENGTH]){
-    if (WINDOW_RATIO == FS_OFF){
-        WINDOW_RATIO = FS_ON;
-        strcpy(option, "Fullscreen ON");
-    }else{
-        WINDOW_RATIO = FS_OFF;
-        strcpy(option, "Fullscreen OFF");
-    }
-    // Redraw screen
-    Render_Window(sRenderer);
-}
-
 // Menu credits
 void Menu_Credits(struct renderer sRenderer, int* gameState){
     // Variables
@@ -219,7 +222,7 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
         Render_Title(sRenderer, "Credits", 0, -250, 1, black);
         Render_Title(sRenderer, "Developer", 0, -50, .5, black);
         Render_Title(sRenderer, DEV_NAME0, 0, 50, .4, black);
-        Render_Title(sRenderer, DEV_NAME1, 0, 150, .4, black);
+        Render_Title(sRenderer, DEV_NAME1, 0, 100, .3, blackOff);
         Render_Title(sRenderer, "Back", 0, 350, .5, black);
         SDL_RenderPresent(sRenderer.pRenderer);
     }
