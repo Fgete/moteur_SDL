@@ -6,9 +6,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-// CONST
-// #define WINDOW_RATIO .5
-#define TITLE_LENGTH 16
 // SOURCES
 #include "info.c"
 #include "structure.c"

@@ -1,4 +1,7 @@
 // ------ GAME INFO ------
+// Const
+#define TITLE_LENGTH 16
+#define SRC_LENGTH 32
 // Title
 #define GAME_TITLE "GAME NAME"
 // Credits

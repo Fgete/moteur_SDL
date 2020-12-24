@@ -1,6 +1,6 @@
 // PROTOTYPES
-void Render_Background(struct renderer);
 void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
+void Render_Sprite(struct renderer, struct sprite);
 void Render_Window(struct renderer*);
 
 
@@ -40,20 +40,20 @@ void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOf
 }
 
 // Render background
-void Render_Background(struct renderer sRenderer){
+void Render_Sprite(struct renderer sRenderer, struct sprite sprite){
     // Sprite
-    SDL_Rect backgroundRect;
-    backgroundRect.x = 0;
-    backgroundRect.y = 0;
-    backgroundRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO;
-    backgroundRect.h = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO;
+    SDL_Rect imageRect;
+    imageRect.x = sprite.position.x * WINDOW_RATIO;
+    imageRect.y = sprite.position.y * WINDOW_RATIO;
+    imageRect.w = sprite.scale.x * WINDOW_RATIO;
+    imageRect.h = sprite.scale.y * WINDOW_RATIO;
     // Render
-    rendererObject renderBackground;
-    renderBackground.pSurface = IMG_Load("./assets/background/default.png");
-    if (!renderBackground.pSurface)
-        SDL_Log("default.png -> LOAD ERROR !\n");
-    renderBackground.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderBackground.pSurface);
-    SDL_FreeSurface(renderBackground.pSurface);
-    SDL_RenderCopy(sRenderer.pRenderer, renderBackground.pTexture, NULL, &backgroundRect);
-    SDL_DestroyTexture(renderBackground.pTexture);
+    rendererObject renderImage;
+    renderImage.pSurface = IMG_Load(sprite.src);
+    if (!renderImage.pSurface)
+        SDL_Log("%s -> LOAD ERROR !\n", sprite.src);
+    renderImage.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderImage.pSurface);
+    SDL_FreeSurface(renderImage.pSurface);
+    SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, NULL, &imageRect);
+    SDL_DestroyTexture(renderImage.pTexture);
 }

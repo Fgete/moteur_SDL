@@ -48,6 +48,11 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
     strcpy(titles[2], "Options");
     strcpy(titles[3], "Credits");
     strcpy(titles[4], "Quit");
+    // Objects
+    sprite sBackground = {
+        {0, 0},
+        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
+        "./assets/background/default.png"};
     // Event
     while (titleState != -1){
         while (SDL_PollEvent(&event)){
@@ -84,7 +89,7 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
         }
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
-        Render_Background(sRenderer);
+        Render_Sprite(sRenderer, sBackground);
         Render_Title(sRenderer, GAME_TITLE, 0, -250, 1, black);
         for (int i = 0; i < nTitle; i++){
             if (i == titleIndex)
@@ -114,6 +119,11 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
     else
         strcpy(options[0], "Fullscreen ON");
     strcpy(options[1], "Back");
+    // Objects
+    sprite sBackground = {
+        {0, 0},
+        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
+        "./assets/background/default.png"};
     // Event
     while (optionState != -1){
         while (SDL_PollEvent(&event)){
@@ -171,7 +181,7 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
         }
         // Render
         SDL_RenderClear(sRenderer->pRenderer);
-        Render_Background(*sRenderer);
+        Render_Sprite(*sRenderer, sBackground);
         Render_Title(*sRenderer, "Options", 0, -250, 1, black);
         for (int i = 0; i < nOption - 1; i++){
             if (i == optionIndex)
@@ -194,6 +204,15 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
     SDL_Color black = {0, 0, 0, 255};
     SDL_Color blackOff = {0, 0, 0, 100};
     int creditsState = 0;
+    // Objects
+    sprite sBackground = {
+        {0, 0},
+        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
+        "./assets/background/default.png"};
+    sprite sLagLogo = {
+        {GetSystemMetrics(SM_CXSCREEN) * .5 - 100, GetSystemMetrics(SM_CYSCREEN) * .5 + 100},
+        {200, 180},
+        "./assets/image/lag.png"};
     // Event
     while (creditsState != -1){
         while (SDL_PollEvent(&event)){
@@ -218,12 +237,14 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
         }
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
-        Render_Background(sRenderer);
+        // Render_Background(sRenderer);
+        Render_Sprite(sRenderer, sBackground);
         Render_Title(sRenderer, "Credits", 0, -250, 1, black);
         Render_Title(sRenderer, "Developer", 0, -50, .5, black);
         Render_Title(sRenderer, DEV_NAME0, 0, 50, .4, black);
         Render_Title(sRenderer, DEV_NAME1, 0, 100, .3, blackOff);
         Render_Title(sRenderer, "Back", 0, 350, .5, black);
+        Render_Sprite(sRenderer, sLagLogo);
         SDL_RenderPresent(sRenderer.pRenderer);
     }
 }
@@ -243,6 +264,11 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
     char quitTitles[nQuit][TITLE_LENGTH];
     strcpy(quitTitles[0], "Yes");
     strcpy(quitTitles[1], "No");
+    // Objects
+    sprite sBackground = {
+        {0, 0},
+        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
+        "./assets/background/default.png"};
     // Events
     while (quitState != -1){
         while (SDL_PollEvent(&event)){
@@ -279,7 +305,7 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
         }
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
-        Render_Background(sRenderer);
+        Render_Sprite(sRenderer, sBackground);
         Render_Title(sRenderer, "Are you sure ?", 0, 0, .5, black);
         for (int i = 0; i < nQuit; i++){
             if (i == quitIndex)
