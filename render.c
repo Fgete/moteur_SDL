@@ -1,5 +1,7 @@
 // PROTOTYPES
 void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
+void Render_Text(struct renderer, struct text text, SDL_Color color);
+// void Render_Collection(struct renderer, struct sprite[N_OBJ_COLLECTION], struct text[N_OBJ_COLLECTION]);
 void Render_Sprite(struct renderer, struct sprite);
 void Render_Window(struct renderer*);
 
@@ -18,21 +20,25 @@ void Render_Window(struct renderer* sRenderer){
     sRenderer->pRenderer = SDL_CreateRenderer(sRenderer->pWindow, -1, SDL_RENDERER_PRESENTVSYNC);
 }
 
-// Render menu title
 void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color){
+
+}
+
+// Render text
+void Render_Text(struct renderer sRenderer, struct text text, SDL_Color color){
     // Font load
     TTF_Font* textFont = TTF_OpenFont("./assets/font/default.ttf", 64);
     if (!textFont)
         printf("default.ttf --- LOAD ERROR !\n");
     // Sprite
     SDL_Rect titleRect;
-    titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * size * strlen(title) * .1;
-    titleRect.h = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .1 * size;
-    titleRect.x = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 - titleRect.w * .5 + WINDOW_RATIO * xOffset;
-    titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .5 - titleRect.h * .5 + WINDOW_RATIO * yOffset;
+    titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * text.transform.scale.x * strlen(text.caption) * .1;
+    titleRect.h = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .1 * text.transform.scale.y;
+    titleRect.x = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 - titleRect.w * .5 + WINDOW_RATIO * text.transform.position.x;
+    titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .5 - titleRect.h * .5 + WINDOW_RATIO * text.transform.position.y;
     // Render
     rendererObject renderTitle;
-    renderTitle.pSurface = TTF_RenderText_Solid(textFont, title, color);
+    renderTitle.pSurface = TTF_RenderText_Solid(textFont, text.caption, color);
     renderTitle.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderTitle.pSurface);
     SDL_FreeSurface(renderTitle.pSurface);
     SDL_RenderCopy(sRenderer.pRenderer, renderTitle.pTexture, NULL, &titleRect);
@@ -43,10 +49,10 @@ void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOf
 void Render_Sprite(struct renderer sRenderer, struct sprite sprite){
     // Sprite
     SDL_Rect imageRect;
-    imageRect.x = sprite.position.x * WINDOW_RATIO;
-    imageRect.y = sprite.position.y * WINDOW_RATIO;
-    imageRect.w = sprite.scale.x * WINDOW_RATIO;
-    imageRect.h = sprite.scale.y * WINDOW_RATIO;
+    imageRect.x = sprite.transform.position.x * WINDOW_RATIO;
+    imageRect.y = sprite.transform.position.y * WINDOW_RATIO;
+    imageRect.w = sprite.transform.scale.x * WINDOW_RATIO;
+    imageRect.h = sprite.transform.scale.y * WINDOW_RATIO;
     // Render
     rendererObject renderImage;
     renderImage.pSurface = IMG_Load(sprite.src);

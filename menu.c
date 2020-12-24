@@ -4,17 +4,17 @@ void Menu_Options(struct renderer*, int*);
 void Menu_Credits(struct renderer, int*);
 void Menu_Quit(struct renderer, int*);
 void Menu_Navigation(int* gameState, int* menuState, int menuGameState);
-void Toggle_Fullscreen(struct renderer*, char[TITLE_LENGTH]);
+void Toggle_Fullscreen(struct renderer*, struct text*);
 
 
 // Toggle fullscreen
-void Toggle_Fullscreen(struct renderer* sRenderer, char option[TITLE_LENGTH]){
+void Toggle_Fullscreen(struct renderer* sRenderer, struct text* tFullscreen){
     if (WINDOW_RATIO == FS_OFF){
         WINDOW_RATIO = FS_ON;
-        strcpy(option, "Fullscreen ON");
+        strcpy(tFullscreen->caption, "Fullscreen ON");
     }else{
         WINDOW_RATIO = FS_OFF;
-        strcpy(option, "Fullscreen OFF");
+        strcpy(tFullscreen->caption, "Fullscreen OFF");
     }
     // Redraw screen
     Render_Window(sRenderer);
@@ -42,17 +42,26 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
     titleGameState[2] = 4;
     titleGameState[3] = 5;
     titleGameState[4] = 6;
-    char titles[nTitle][TITLE_LENGTH];
+    /* char titles[nTitle][TITLE_LENGTH];
     strcpy(titles[0], "Start");
     strcpy(titles[1], "Continue");
     strcpy(titles[2], "Options");
     strcpy(titles[3], "Credits");
-    strcpy(titles[4], "Quit");
+    strcpy(titles[4], "Quit"); */
     // Objects
-    sprite sBackground = {
-        {0, 0},
-        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
-        "./assets/background/default.png"};
+    text titles[nTitle];
+    text tStart = {{{0, -50, 1},  {.5, .5, 1}}, "Start"};
+    text tContinue = {{{0, 50, 1},  {.5, .5, 1}}, "Continue"};
+    text tOptions = {{{0, 150, 1},  {.5, .5, 1}}, "Options"};
+    text tCredits = {{{0, 250, 1},  {.5, .5, 1}}, "Credits"};
+    text tQuit = {{{0, 350, 1},  {.5, .5, 1}}, "Quit"};
+    titles[0] = tStart;
+    titles[1] = tContinue;
+    titles[2] = tOptions;
+    titles[3] = tCredits;
+    titles[4] = tQuit;
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png"};
+    text tGameTitle = {{{0, -250, 1},  {1, 1, 1}}, GAME_TITLE};
     // Event
     while (titleState != -1){
         while (SDL_PollEvent(&event)){
@@ -91,11 +100,12 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
         SDL_RenderClear(sRenderer.pRenderer);
         Render_Sprite(sRenderer, sBackground);
         Render_Title(sRenderer, GAME_TITLE, 0, -250, 1, black);
+        Render_Text(sRenderer, tGameTitle, black);
         for (int i = 0; i < nTitle; i++){
             if (i == titleIndex)
-                Render_Title(sRenderer, titles[i], 0, 100 * i - 50, .5, black);
+                Render_Text(sRenderer, titles[i], black);
             else
-                Render_Title(sRenderer, titles[i], 0, 100 * i - 50, .5, blackOff);
+                Render_Text(sRenderer, titles[i], blackOff);
         }
         SDL_RenderPresent(sRenderer.pRenderer);
     }
@@ -120,10 +130,14 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
         strcpy(options[0], "Fullscreen ON");
     strcpy(options[1], "Back");
     // Objects
-    sprite sBackground = {
-        {0, 0},
-        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
-        "./assets/background/default.png"};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png"};
+    text tTitle = {{{0, -250, 1},  {1, 1, 1}}, "Options"};
+    text tFullscreen = {{{-100, -50, 1},  {.5, .5, 1}}, ""};
+    if (WINDOW_RATIO == FS_OFF)
+        strcpy(tFullscreen.caption, "Fullscreen OFF");
+    else
+        strcpy(tFullscreen.caption, "Fullscreen ON");
+    text tBack = {{{0, 350, 1},  {.5, .5, 1}}, "Back"};
     // Event
     while (optionState != -1){
         while (SDL_PollEvent(&event)){
@@ -132,7 +146,7 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
                     case SDLK_RETURN: /* VALIDATE */
                             switch (optionIndex){
                                 case 0: /*FULLSCREEN*/
-                                    Toggle_Fullscreen(sRenderer, options[0]); break;
+                                    Toggle_Fullscreen(sRenderer, &tFullscreen); break;
                                 case 1: /*BACK TO MENU*/
                                     Menu_Navigation(gameState, &optionState, optionGameState[optionIndex]); break;
                                 default : break;
@@ -141,7 +155,7 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
                     case SDLK_SPACE: /* VALIDATE */
                         switch (optionIndex){
                                 case 0: /*FULLSCREEN*/
-                                    Toggle_Fullscreen(sRenderer, options[0]); break;
+                                    Toggle_Fullscreen(sRenderer, &tFullscreen); break;
                                 case 1: /*BACK TO MENU*/
                                     Menu_Navigation(gameState, &optionState, optionGameState[optionIndex]); break;
                                 default : break;
@@ -150,7 +164,7 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
                     case SDLK_KP_ENTER: /* VALIDATE */
                         switch (optionIndex){
                                 case 0: /*FULLSCREEN*/
-                                    Toggle_Fullscreen(sRenderer, options[0]); break;
+                                    Toggle_Fullscreen(sRenderer, &tFullscreen); break;
                                 case 1: /*BACK TO MENU*/
                                     Menu_Navigation(gameState, &optionState, optionGameState[optionIndex]); break;
                                 default : break;
@@ -182,17 +196,17 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
         // Render
         SDL_RenderClear(sRenderer->pRenderer);
         Render_Sprite(*sRenderer, sBackground);
-        Render_Title(*sRenderer, "Options", 0, -250, 1, black);
+        Render_Text(*sRenderer, tTitle, black);
         for (int i = 0; i < nOption - 1; i++){
             if (i == optionIndex)
-                Render_Title(*sRenderer, options[i], -100, 100 * i - 50, .5, black);
+                Render_Text(*sRenderer, tFullscreen, black);
             else
-                Render_Title(*sRenderer, options[i], -100, 100 * i - 50, .5, blackOff);
+                Render_Text(*sRenderer, tFullscreen, blackOff);
         }
         if (optionIndex == nOption - 1)
-            Render_Title(*sRenderer, options[nOption - 1], 0, 350, .5, black);
+            Render_Text(*sRenderer, tBack, black);
         else
-            Render_Title(*sRenderer, options[nOption - 1], 0, 350, .5, blackOff);
+            Render_Text(*sRenderer, tBack, blackOff);
         SDL_RenderPresent(sRenderer->pRenderer);
     }
 }
@@ -205,14 +219,13 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
     SDL_Color blackOff = {0, 0, 0, 100};
     int creditsState = 0;
     // Objects
-    sprite sBackground = {
-        {0, 0},
-        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
-        "./assets/background/default.png"};
-    sprite sLagLogo = {
-        {GetSystemMetrics(SM_CXSCREEN) * .5 - 100, GetSystemMetrics(SM_CYSCREEN) * .5 + 100},
-        {200, 180},
-        "./assets/image/lag.png"};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png"};
+    sprite sLagLogo = {{{GetSystemMetrics(SM_CXSCREEN) * .5 - 100, GetSystemMetrics(SM_CYSCREEN) * .5 + 100, 1},  {200, 180, 1}}, "./assets/image/lag.png"};
+    text tTitle = {{{0, -250, 1},  {1, 1, 1}}, "Credits"};
+    text tDev = {{{0, -50, 1},  {.5, .5, 1}}, "Developer"};
+    text tName0 = {{{0, 50, 1},  {.4, .4, 1}}, DEV_NAME0};
+    text tName1 = {{{0, 100, 1},  {.3, .3, 1}}, DEV_NAME1};
+    text tBack = {{{0, 350, 1},  {.5, .5, 1}}, "Back"};
     // Event
     while (creditsState != -1){
         while (SDL_PollEvent(&event)){
@@ -239,11 +252,11 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
         SDL_RenderClear(sRenderer.pRenderer);
         // Render_Background(sRenderer);
         Render_Sprite(sRenderer, sBackground);
-        Render_Title(sRenderer, "Credits", 0, -250, 1, black);
-        Render_Title(sRenderer, "Developer", 0, -50, .5, black);
-        Render_Title(sRenderer, DEV_NAME0, 0, 50, .4, black);
-        Render_Title(sRenderer, DEV_NAME1, 0, 100, .3, blackOff);
-        Render_Title(sRenderer, "Back", 0, 350, .5, black);
+        Render_Text(sRenderer, tTitle, black);
+        Render_Text(sRenderer, tDev, black);
+        Render_Text(sRenderer, tName0, black);
+        Render_Text(sRenderer, tName1, blackOff);
+        Render_Text(sRenderer, tBack, black);
         Render_Sprite(sRenderer, sLagLogo);
         SDL_RenderPresent(sRenderer.pRenderer);
     }
@@ -261,14 +274,14 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
     int quitGameState[nQuit];
     quitGameState[0] = -1;
     quitGameState[1] = 0;
-    char quitTitles[nQuit][TITLE_LENGTH];
-    strcpy(quitTitles[0], "Yes");
-    strcpy(quitTitles[1], "No");
     // Objects
-    sprite sBackground = {
-        {0, 0},
-        {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)},
-        "./assets/background/default.png"};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png"};
+    text tSure = {{{0, 0, 1},  {.5, .5, 1}}, "Are you sure ?"};
+    text quitTitles[nQuit];
+    text tYes = {{{-100, 100, 1},  {.5, .5, 1}}, "Yes"};
+    text tNo = {{{100, 100, 1},  {.5, .5, 1}}, "No"};
+    quitTitles[0] = tYes;
+    quitTitles[1] = tNo;
     // Events
     while (quitState != -1){
         while (SDL_PollEvent(&event)){
@@ -306,12 +319,12 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
         // Render
         SDL_RenderClear(sRenderer.pRenderer);
         Render_Sprite(sRenderer, sBackground);
-        Render_Title(sRenderer, "Are you sure ?", 0, 0, .5, black);
+        Render_Text(sRenderer, tSure, black);
         for (int i = 0; i < nQuit; i++){
             if (i == quitIndex)
-                Render_Title(sRenderer, quitTitles[i], -100 + 200 * i, 100, .5, black);
+                Render_Text(sRenderer, quitTitles[i], black);
             else
-                Render_Title(sRenderer, quitTitles[i], -100 + 200 * i, 100, .5, blackOff);
+                Render_Text(sRenderer, quitTitles[i], blackOff);
         }
         SDL_RenderPresent(sRenderer.pRenderer);
     }
