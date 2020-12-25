@@ -29,4 +29,5 @@ typedef struct sprite{
 typedef struct text{
     transform transform;
     char caption[TITLE_LENGTH];
+    SDL_Color color;
 }text;

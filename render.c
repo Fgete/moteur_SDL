@@ -1,6 +1,6 @@
 // PROTOTYPES
 void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
-void Render_Text(struct renderer, struct text text, SDL_Color color);
+void Render_Text(struct renderer, struct text text);
 // void Render_Collection(struct renderer, struct sprite[N_OBJ_COLLECTION], struct text[N_OBJ_COLLECTION]);
 void Render_Sprite(struct renderer, struct sprite);
 void Render_Window(struct renderer*);
@@ -25,7 +25,7 @@ void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOf
 }
 
 // Render text
-void Render_Text(struct renderer sRenderer, struct text text, SDL_Color color){
+void Render_Text(struct renderer sRenderer, struct text text){
     // Font load
     TTF_Font* textFont = TTF_OpenFont("./assets/font/default.ttf", 64);
     if (!textFont)
@@ -38,7 +38,7 @@ void Render_Text(struct renderer sRenderer, struct text text, SDL_Color color){
     titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .5 - titleRect.h * .5 + WINDOW_RATIO * text.transform.position.y;
     // Render
     rendererObject renderTitle;
-    renderTitle.pSurface = TTF_RenderText_Solid(textFont, text.caption, color);
+    renderTitle.pSurface = TTF_RenderText_Solid(textFont, text.caption, text.color);
     renderTitle.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderTitle.pSurface);
     SDL_FreeSurface(renderTitle.pSurface);
     SDL_RenderCopy(sRenderer.pRenderer, renderTitle.pTexture, NULL, &titleRect);
