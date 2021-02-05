@@ -15,6 +15,11 @@ typedef struct vector3{
     float z;
 }vector3;
 
+typedef struct vector2{
+    float x;
+    float y;
+}vector2;
+
 typedef struct transform{
     vector3 position;
     // vector3 rotation;
@@ -24,6 +29,10 @@ typedef struct transform{
 typedef struct sprite{
     transform transform;
     char src[SRC_LENGTH];
+    vector2 spriteSize;
+    vector2 tileCount;
+    int frame;
+    int nTile;
 }sprite;
 
 typedef struct text{

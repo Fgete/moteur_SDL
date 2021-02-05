@@ -1,8 +1,6 @@
 // PROTOTYPES
-void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
 void Render_Text(struct renderer, struct text text);
-// void Render_Collection(struct renderer, struct sprite[N_OBJ_COLLECTION], struct text[N_OBJ_COLLECTION]);
-void Render_Sprite(struct renderer, struct sprite);
+void Render_Sprite(struct renderer, struct sprite*);
 void Render_Window(struct renderer*);
 
 
@@ -18,10 +16,6 @@ void Render_Window(struct renderer* sRenderer){
         GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO,
         SDL_WINDOW_SHOWN);
     sRenderer->pRenderer = SDL_CreateRenderer(sRenderer->pWindow, -1, SDL_RENDERER_PRESENTVSYNC);
-}
-
-void Render_Title(struct renderer sRenderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color){
-
 }
 
 // Render text
@@ -46,20 +40,41 @@ void Render_Text(struct renderer sRenderer, struct text text){
 }
 
 // Render background
-void Render_Sprite(struct renderer sRenderer, struct sprite sprite){
+void Render_Sprite(struct renderer sRenderer, struct sprite* sprite){
+    // int nTile = 58;
+    int frameX = 1;
+    int frameY = 1;
+    if (sprite->tileCount.x > 0)
+        frameX = sprite->frame % (int)sprite->tileCount.x;
+    if (sprite->tileCount.y > 0)
+        frameY = sprite->frame % (int)sprite->tileCount.y;
     // Sprite
     SDL_Rect imageRect;
-    imageRect.x = sprite.transform.position.x * WINDOW_RATIO;
-    imageRect.y = sprite.transform.position.y * WINDOW_RATIO;
-    imageRect.w = sprite.transform.scale.x * WINDOW_RATIO;
-    imageRect.h = sprite.transform.scale.y * WINDOW_RATIO;
+    imageRect.x = sprite->transform.position.x * WINDOW_RATIO;
+    imageRect.y = sprite->transform.position.y * WINDOW_RATIO;
+    imageRect.w = sprite->transform.scale.x * WINDOW_RATIO;
+    imageRect.h = sprite->transform.scale.y * WINDOW_RATIO;
+    SDL_Rect tileRect;
+    tileRect.x = (sprite->spriteSize.x / sprite->tileCount.x) * frameX;
+    tileRect.y = (sprite->spriteSize.y / sprite->tileCount.y) * frameY;
+    tileRect.w = (sprite->spriteSize.x / sprite->tileCount.x);
+    tileRect.h = (sprite->spriteSize.y / sprite->tileCount.y);
     // Render
     rendererObject renderImage;
-    renderImage.pSurface = IMG_Load(sprite.src);
+    renderImage.pSurface = IMG_Load(sprite->src);
     if (!renderImage.pSurface)
-        SDL_Log("%s -> LOAD ERROR !\n", sprite.src);
+        SDL_Log("%s -> LOAD ERROR !\n", sprite->src);
     renderImage.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderImage.pSurface);
     SDL_FreeSurface(renderImage.pSurface);
-    SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, NULL, &imageRect);
+    if (sprite->tileCount.x > 1 || sprite->tileCount.y > 1){ // If there is several tiles
+        SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, &tileRect, &imageRect);
+        if (sprite->frame < sprite->nTile)
+            sprite->frame++; // Next tile
+        else
+            sprite->frame = 1;
+        printf("f : %d\n", sprite->frame);
+    }
+    else // If there is only one tile
+        SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, NULL, &imageRect);
     SDL_DestroyTexture(renderImage.pTexture);
 }

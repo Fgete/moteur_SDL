@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <string.h>
+#include <time.h>
 // SDL
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
