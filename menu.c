@@ -54,7 +54,7 @@ void Menu_Title(struct renderer sRenderer, int* gameState){
     titles[2] = tOptions;
     titles[3] = tCredits;
     titles[4] = tQuit;
-    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png", {0, 0}, {1, 1}, 1, 1};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, menu_asset_sBackground, {0, 0}, {1, 1}, 1, 1};
     text tGameTitle = {{{0, -250, 1},  {1, 1, 1}}, GAME_TITLE, black};
     // Event
     while (titleState != -1){
@@ -124,7 +124,7 @@ void Menu_Options(struct renderer* sRenderer, int* gameState){
     optionGameState[1] = 0;
     char options[nOption][TITLE_LENGTH];
     // Objects
-    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png", {0, 0}, {1, 1}, 1, 1};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, menu_asset_sBackground, {0, 0}, {1, 1}, 1, 1};
     text tTitle = {{{0, -250, 1},  {1, 1, 1}}, "Options", black};
     text tFullscreen = {{{-100, -50, 1},  {.5, .5, 1}}, "", black};
     if (WINDOW_RATIO == FS_OFF)
@@ -219,8 +219,8 @@ void Menu_Credits(struct renderer sRenderer, int* gameState){
     SDL_Color blackOff = {0, 0, 0, 100};
     int creditsState = 0;
     // Objects
-    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png", {0, 0}, {1, 1}, 1, 1};
-    sprite sLagLogo = {{{GetSystemMetrics(SM_CXSCREEN) * .5 - 100, GetSystemMetrics(SM_CYSCREEN) * .5 + 100, 1},  {200, 180, 1}}, "./assets/image/lag.png", {0, 0}, {1, 1}, 1, 1};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, menu_asset_sBackground, {0, 0}, {1, 1}, 1, 1};
+    sprite sLagLogo = {{{GetSystemMetrics(SM_CXSCREEN) * .5 - 100, GetSystemMetrics(SM_CYSCREEN) * .5 + 100, 1},  {200, 180, 1}}, menu_asset_sLagLogo, {0, 0}, {1, 1}, 1, 1};
     text tTitle = {{{0, -250, 1},  {1, 1, 1}}, "Credits", black};
     text tDev = {{{0, -50, 1},  {.5, .5, 1}}, "Developer", black};
     text tName0 = {{{0, 50, 1},  {.4, .4, 1}}, DEV_NAME0, black};
@@ -275,8 +275,8 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
     quitGameState[0] = -1;
     quitGameState[1] = 0;
     // Objects
-    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, "./assets/background/default.png", {0, 0}, {1, 1}, 1, 1};
-    sprite sEarth = {{{0, 0, 1},  {100, 100, 1}}, "./assets/image/earth.png", {1024, 1024}, {16, 16}, 1, 256};
+    sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, menu_asset_sBackground, {0, 0}, {1, 1}, 1, 1};
+    sprite sEarth = {{{0, 0, 1},  {100, 100, 1}}, menu_asset_sEarth, {1024, 1024}, {16, 16}, 1, 256};
     text tSure = {{{0, 0, 1},  {.5, .5, 1}}, "Are you sure ?", black};
     text quitTitles[nQuit];
     text tYes = {{{-100, 100, 1},  {.5, .5, 1}}, "Yes", black};

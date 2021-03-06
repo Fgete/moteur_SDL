@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1609069157 source:c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\main.c
+1615030026 source:c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -10,6 +10,7 @@
 	<SDL2/SDL_ttf.h>
 	"info.c"
 	"structure.c"
+	"menu_assets.c"
 	"render.c"
 	"menu.c"
 
@@ -378,11 +379,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1612482516 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\structure.c
+1615033096 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\structure.c
 
-1612483132 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\menu.c
+1615035057 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\menu.c
 
-1612483192 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\render.c
+1615034314 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\render.c
 
 1612481420 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\info.c
+
+1615034486 c:\users\franc\desktop\cours\algo\git\moteur_sdl\moteur_sdl\menu_assets.c
 

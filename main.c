@@ -10,6 +10,7 @@
 // SOURCES
 #include "info.c"
 #include "structure.c"
+#include "menu_assets.c"
 #include "render.c"
 #include "menu.c"
 
@@ -46,6 +47,9 @@ int main(int argc, char *argv[])
         }else{
             SDL_Log("SDL_TTF -> OK");
         }
+
+        // Menu assets init
+        Init_Menu_Assets();
 
         // ------ PROGRAM ------
         int gameState = 0;

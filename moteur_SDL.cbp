@@ -58,6 +58,10 @@
 		<Unit filename="menu.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="menu_assets.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="render.c">
 			<Option compilerVar="CC" />
 			<Option target="&lt;{~None~}&gt;" />

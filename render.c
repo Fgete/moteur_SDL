@@ -1,3 +1,4 @@
+
 // PROTOTYPES
 void Render_Text(struct renderer, struct text text);
 void Render_Sprite(struct renderer, struct sprite*);
@@ -20,10 +21,6 @@ void Render_Window(struct renderer* sRenderer){
 
 // Render text
 void Render_Text(struct renderer sRenderer, struct text text){
-    // Font load
-    TTF_Font* textFont = TTF_OpenFont("./assets/font/default.ttf", 64);
-    if (!textFont)
-        printf("default.ttf --- LOAD ERROR !\n");
     // Sprite
     SDL_Rect titleRect;
     titleRect.w = GetSystemMetrics(SM_CXSCREEN) * WINDOW_RATIO * .5 * text.transform.scale.x * strlen(text.caption) * .1;
@@ -32,7 +29,7 @@ void Render_Text(struct renderer sRenderer, struct text text){
     titleRect.y = GetSystemMetrics(SM_CYSCREEN) * WINDOW_RATIO * .5 - titleRect.h * .5 + WINDOW_RATIO * text.transform.position.y;
     // Render
     rendererObject renderTitle;
-    renderTitle.pSurface = TTF_RenderText_Solid(textFont, text.caption, text.color);
+    renderTitle.pSurface = TTF_RenderText_Solid(menu_asset_textFont, text.caption, text.color);
     renderTitle.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderTitle.pSurface);
     SDL_FreeSurface(renderTitle.pSurface);
     SDL_RenderCopy(sRenderer.pRenderer, renderTitle.pTexture, NULL, &titleRect);
@@ -61,10 +58,9 @@ void Render_Sprite(struct renderer sRenderer, struct sprite* sprite){
     tileRect.h = (sprite->spriteSize.y / sprite->tileCount.y);
     // Render
     rendererObject renderImage;
-    renderImage.pSurface = IMG_Load(sprite->src);
-    if (!renderImage.pSurface)
-        SDL_Log("%s -> LOAD ERROR !\n", sprite->src);
+    renderImage.pSurface = sprite->surface;
     renderImage.pTexture = SDL_CreateTextureFromSurface(sRenderer.pRenderer, renderImage.pSurface);
+    renderImage.pSurface = NULL; // In order to preserve loaded surfaces
     SDL_FreeSurface(renderImage.pSurface);
     if (sprite->tileCount.x > 1 || sprite->tileCount.y > 1){ // If there is several tiles
         SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, &tileRect, &imageRect);

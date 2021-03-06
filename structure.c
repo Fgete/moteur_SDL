@@ -28,7 +28,7 @@ typedef struct transform{
 
 typedef struct sprite{
     transform transform;
-    char src[SRC_LENGTH];
+    SDL_Surface *surface;
     vector2 spriteSize;
     vector2 tileCount;
     int frame;
