@@ -276,7 +276,7 @@ void Menu_Quit(struct renderer sRenderer, int* gameState){
     quitGameState[1] = 0;
     // Objects
     sprite sBackground = {{{0, 0, 0},  {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 1}}, menu_asset_sBackground, {0, 0}, {1, 1}, 1, 1};
-    sprite sEarth = {{{0, 0, 1},  {100, 100, 1}}, menu_asset_sEarth, {1024, 1024}, {16, 16}, 1, 256};
+    sprite sEarth = {{{50, 50, 1},  {200, 200, 1}}, menu_asset_sEarth, {1024, 1024}, {16, 16}, 1, 256};
     text tSure = {{{0, 0, 1},  {.5, .5, 1}}, "Are you sure ?", black};
     text quitTitles[nQuit];
     text tYes = {{{-100, 100, 1},  {.5, .5, 1}}, "Yes", black};

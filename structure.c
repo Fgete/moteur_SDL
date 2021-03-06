@@ -33,6 +33,10 @@ typedef struct sprite{
     vector2 tileCount;
     int frame;
     int nTile;
+    // I will add an animation speed value
+    // int frameRate;
+    // I will also add a physic type and some associated values
+    // physic sPhysic;
 }sprite;
 
 typedef struct text{
@@ -40,3 +44,13 @@ typedef struct text{
     char caption[TITLE_LENGTH];
     SDL_Color color;
 }text;
+
+enum physicTypeList {none, solid, soft};
+enum colliderShapeList {circle, box};
+
+typedef struct physic{
+    enum physicTypeList physicType;
+    enum colliderShapeList colliderShape;
+    vector3 colliderBox;
+    int colliderRadius;
+}physic;
