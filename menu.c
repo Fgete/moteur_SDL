@@ -1,10 +1,10 @@
 // PROTOTYPES
+void Toggle_Fullscreen(struct renderer*, struct text*);
+void Menu_Navigation(int* gameState, int* menuState, int menuGameState);
 void Menu_Title(struct renderer, int*);
 void Menu_Options(struct renderer*, int*);
 void Menu_Credits(struct renderer, int*);
 void Menu_Quit(struct renderer, int*);
-void Menu_Navigation(int* gameState, int* menuState, int menuGameState);
-void Toggle_Fullscreen(struct renderer*, struct text*);
 
 
 // Toggle fullscreen

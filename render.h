@@ -2,7 +2,8 @@
 #define RENDER_H_INCLUDED
 
 // PROTOTYPES
-void Render_Background(struct renderer);
-void Render_Title(struct renderer, char title[TITLE_LENGTH], float xOffset, float yOffset, float size, SDL_Color color);
+void Render_Text(struct renderer, struct text text);
+void Render_Sprite(struct renderer, struct sprite*);
+void Render_Window(struct renderer*);
 
 #endif // RENDER_H_INCLUDED

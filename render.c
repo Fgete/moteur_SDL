@@ -1,4 +1,3 @@
-
 // PROTOTYPES
 void Render_Text(struct renderer, struct text text);
 void Render_Sprite(struct renderer, struct sprite*);
@@ -68,7 +67,7 @@ void Render_Sprite(struct renderer sRenderer, struct sprite* sprite){
             sprite->frame++; // Next tile
         else
             sprite->frame = 1;
-        printf("f : %d\n", sprite->frame);
+        // printf("f : %d\n", sprite->frame);
     }
     else // If there is only one tile
         SDL_RenderCopy(sRenderer.pRenderer, renderImage.pTexture, NULL, &imageRect);

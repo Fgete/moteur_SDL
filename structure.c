@@ -29,12 +29,11 @@ typedef struct transform{
 typedef struct sprite{
     transform transform;
     SDL_Surface *surface;
-    vector2 spriteSize;
-    vector2 tileCount;
-    int frame;
-    int nTile;
-    // I will add an animation speed value
-    // int frameRate;
+    vector2 spriteSize; // Tile size
+    vector2 tileCount; // Number of rows and columns
+    int frame; // Current tile
+    int nTile; // Number of tiles
+    // float frameRate; // Animation speed value (0.01 to x)
     // I will also add a physic type and some associated values
     // physic sPhysic;
 }sprite;
@@ -45,6 +44,7 @@ typedef struct text{
     SDL_Color color;
 }text;
 
+// Physic types & Collider shape
 enum physicTypeList {none, solid, soft};
 enum colliderShapeList {circle, box};
 
